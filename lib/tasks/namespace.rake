@@ -15,7 +15,7 @@ task send_email: :environment do
   # message_params =  { from: 'Excited User <mailgun@sandbox0be5a2921155402796b42764dc373d8a.mailgun.org',
   message_params =  { from: "Seb <mailgun@#{domain_name}>",
                       to:   'sebastien.cebula@gmail.com',
-                      subject: 'Cours du YEN',
+                      subject: "Cours du YEN - #{yen}",
                       text:    "Actuellement #{yen} !!"
                     }
   
