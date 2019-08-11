@@ -5,12 +5,15 @@ task send_email: :environment do
   # abort("Yen is too low") unless yen > 116
 
   require 'mailgun-ruby'
+  require 'dotenv'
+  api_key = ENV.fetch('MAILGUN_API_KEY')
+  domain_name = ENV.fetch('MAILGUN_DOMAIN_NAME')
   # First, instantiate the Mailgun Client with your API key
-  mg_client = Mailgun::Client.new '98ecfa09a3ce4a6d5619a6feb5908441-73ae490d-8cc802fe'
+  mg_client = Mailgun::Client.new api_key
   
   # Define your message parameters
   # message_params =  { from: 'Excited User <mailgun@sandbox0be5a2921155402796b42764dc373d8a.mailgun.org',
-  message_params =  { from: 'Seb <mailgun@sandbox0be5a2921155402796b42764dc373d8a.mailgun.org>',
+  message_params =  { from: "Seb <mailgun@#{domain_name}>",
                       to:   'sebastien.cebula@gmail.com',
                       subject: 'Cours du YEN',
                       text:    "Actuellement #{yen} !!"
@@ -18,7 +21,7 @@ task send_email: :environment do
   
   # Send your message through the client
   begin
-    mg_client.send_message 'sandbox0be5a2921155402796b42764dc373d8a.mailgun.org', message_params
+    mg_client.send_message "#{domain_name}", message_params
   rescue => exception
     puts '___________________________________'
     puts '__________ERROR__________'
